@@ -11,15 +11,24 @@ type Room {
     users: [User!]!
 }
 
+type Message {
+  id: ID!
+  user: String!
+  content: String!
+}
+
 type Query {
     getRooms:[Room!]!
     getRoom(id:String!): Room!
+    messages: [Message!]!
 }
+
 
 type Mutation {
     addRoom(name:String!): Room!
     addUser(name:String!, email:String!): User!
     joinRoom(userId:String!,roomId:String!): Room!
+    postMessage(user:String!,content:String!): Message!
 }
 
 type Subscription{
