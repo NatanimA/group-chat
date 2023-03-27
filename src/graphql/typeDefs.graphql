@@ -1,0 +1,27 @@
+
+type User {
+    id: String!
+    name: String!
+    email: String!
+}
+
+type Room {
+    id: String!
+    name: String!
+    users: [User!]!
+}
+
+type Query {
+    getRooms:[Room!]!
+    getRoom(id:String!): Room!
+}
+
+type Mutation {
+    addRoom(name:String!): Room!
+    addUser(name:String!, email:String!): User!
+    joinRoom(userId:String!,roomId:String!): Room!
+}
+
+type Subscription{
+    roomNotification(roomId:String!): Room!
+}
