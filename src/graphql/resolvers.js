@@ -4,6 +4,7 @@ import { subscribe } from 'graphql';
 
 const Rooms = []
 const Users = []
+const Messages = []
 const ROOM_NOTIFICATION = 'ROOM_NOTIFICATION'
 const pubSub = new PubSub();
 
@@ -15,6 +16,9 @@ const resolvers = {
         getRoom: (parent,arg) => {
             const {id} = arg
             return Rooms.filter(room => room.id === id)
+        },
+        messages: (parent,arg) => {
+            return Messages
         }
     },
 
@@ -52,6 +56,11 @@ const resolvers = {
             const room = Rooms.find(room => room.id === roomId)
             pubSub.publish(ROOM_NOTIFICATION,{roomNotification:room})
             return room;
+        },
+        postMessage: (parent,{user,content}) => {
+            const newMessage = {id:uuid(),user,content}
+            Messages.push(newMessage)
+            return newMessage;
         }
     }
 }
