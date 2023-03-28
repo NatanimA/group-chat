@@ -1,11 +1,12 @@
 import React, { useEffect,useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { GET_MESSAGES } from './queries'
+import { Container, Row,Col, FormInput,Button } from 'shards-react'
 
 const Messages = ({user}) => {
   const {data} = useQuery(GET_MESSAGES())
   const[messages,setMessages] = useState([])
-  console.log(data.messages)
+  console.log(data)
 
   return (
     <div>
