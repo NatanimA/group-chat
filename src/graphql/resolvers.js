@@ -6,6 +6,7 @@ const Rooms = []
 const Users = []
 const Messages = []
 const ROOM_NOTIFICATION = 'ROOM_NOTIFICATION'
+const MESSAGE_NOTIFICATION = 'MESSAGE_NOTIFICATION'
 const pubSub = new PubSub();
 
 const resolvers = {
@@ -27,6 +28,9 @@ const resolvers = {
             subscribe: withFilter(() => pubSub.asyncIterator([ROOM_NOTIFICATION]),(payload,variables) => {
                 return(payload.roomNotification.id === variables.roomId)
             })
+        },
+        messageNotification:{
+            subscribe: () => pubSub.asyncIterator([MESSAGE_NOTIFICATION])
         }
     },
 
@@ -60,6 +64,7 @@ const resolvers = {
         postMessage: (parent,{user,content}) => {
             const newMessage = {id:uuid(),user,content}
             Messages.push(newMessage)
+            pubSub.publish(MESSAGE_NOTIFICATION,{messageNotification:newMessage})
             return newMessage;
         }
     }
