@@ -1,16 +1,34 @@
 import React, { useEffect,useState } from 'react'
-import { useQuery } from '@apollo/client'
+import { useQuery,useSubscription } from '@apollo/client'
 import { GET_MESSAGES } from './queries'
 import { Container, Row,Col, FormInput,Button } from 'shards-react'
+import {MESSAGE_SUBSCRIPTION} from './queries'
 
 const Messages = ({user}) => {
-  const {data} = useQuery(GET_MESSAGES())
+  const {data,subscribeToMore} = useQuery(GET_MESSAGES)
   const[messages,setMessages] = useState([])
-  console.log(data)
+  const subscription = useSubscription(MESSAGE_SUBSCRIPTION)
+  useEffect(() => {
+    if(data?.messages !== undefined){
+        setMessages(data.messages)
+    }
+  },[data])
+  subscribeToMore({
+    document: MESSAGE_SUBSCRIPTION,
+    updateQuery:(prev,{subscriptionData}) => {
+        if(!subscriptionData.data) return prev
+        const newMessage = subscriptionData.data.messageNotification;
+        let m = [...messages];
+        m.push(newMessage)
+        setMessages(m)
+    }
+  })
+
+  console.log("MESSAGES: ", messages)
 
   return (
     <div>
-        {data?.messages && data?.messages.length > 0 ?  data?.messages.map((message) => (
+        {messages && messages.length > 0 ? messages.map((message) => (
             <div key={message.id} style={{display:'flex',justifyContent: user === message?.user ? 'right' : 'left',width:'100%'}}>
                 {user !== message.user ?
                     <div
@@ -33,7 +51,8 @@ const Messages = ({user}) => {
                     color: user === message?.user ? '#fff' : '#000',
                     padding:'1em',
                     borderRadius:'1em',
-                    maxWidth: '100%'
+                    width: '60%',
+                    margin: '1rem 0'
                     }}>
                     {message.content}
                 </div>
