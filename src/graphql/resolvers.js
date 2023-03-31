@@ -61,8 +61,14 @@ const resolvers = {
             pubSub.publish(ROOM_NOTIFICATION,{roomNotification:room})
             return room;
         },
-        postMessage: (parent,{user,content}) => {
-            const newMessage = {id:uuid(),user,content}
+        postMessage: (parent,{user,content,room}) => {
+            const inRoom  = Rooms.find(r => r.id === room)
+            const newMessage = {id:uuid(),user,content,room}
+            Rooms.forEach( r => {
+                if(r.id === room){
+                    r.messages.push(newMessage)
+                }
+            })
             Messages.push(newMessage)
             pubSub.publish(MESSAGE_NOTIFICATION,{messageNotification:newMessage})
             return newMessage;
