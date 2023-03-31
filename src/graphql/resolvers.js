@@ -63,7 +63,7 @@ const resolvers = {
         },
         postMessage: (parent,{user,content,room}) => {
             const inRoom  = Rooms.find(r => r.id === room)
-            const newMessage = {id:uuid(),user,content,room}
+            const newMessage = {id:uuid(),user,content,inRoom}
             Rooms.forEach( r => {
                 if(r.id === room){
                     r.messages.push(newMessage)
