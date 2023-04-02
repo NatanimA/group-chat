@@ -3,6 +3,7 @@ type User {
     id: String!
     name: String!
     email: String!
+    rooms: [Room!]!
 }
 
 type Message {
@@ -37,5 +38,5 @@ type Mutation {
 
 type Subscription{
     roomNotification(roomId:String!): Room!
-    messageNotification: Message!
+    messageNotification(room:[String!]!): Message!
 }
