@@ -30,7 +30,11 @@ const resolvers = {
             })
         },
         messageNotification:{
-            subscribe: () => pubSub.asyncIterator([MESSAGE_NOTIFICATION])
+            subscribe: withFilter(() => pubSub.asyncIterator([MESSAGE_NOTIFICATION]),(payload,variables) => {
+                console.log("Payload: ",payload)
+                console.log("variables: ",variables)
+                return(variables.room.includes(payload.messageNotification.room.id))
+            })
         }
     },
 
@@ -66,6 +70,7 @@ const resolvers = {
             const newMessage = {id:uuid(),user,content,inRoom}
             Rooms.forEach( r => {
                 if(r.id === room){
+                    console.log("RRRRRRRRRRRR: ",r)
                     r.messages.push(newMessage)
                 }
             })
