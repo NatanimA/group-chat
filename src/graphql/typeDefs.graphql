@@ -7,7 +7,7 @@ type User {
 }
 
 type Message {
-  id: ID!
+  id: String!
   user: String!
   room: Room!
   content: String!
@@ -16,8 +16,8 @@ type Message {
 type Room {
     id: String!
     name: String!
-    users: [User!]!
     messages: [Message!]!
+    users: [User!]!
 }
 
 
