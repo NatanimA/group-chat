@@ -33,7 +33,7 @@ const resolvers = {
             subscribe: withFilter(() => pubSub.asyncIterator([MESSAGE_NOTIFICATION]),(payload,variables) => {
                 console.log("Payload: ",payload)
                 console.log("variables: ",variables)
-                return(variables.room.includes(payload.messageNotification.room.id))
+                return(variables.room.includes(payload.messageNotification.inRoom.id))
             })
         }
     },
@@ -41,7 +41,7 @@ const resolvers = {
     Mutation: {
         addRoom: (parent,arg) => {
             const {name} = arg
-            const newRoom = {id:uuid(),name,users:[]}
+            const newRoom = {id:uuid(),name,users:[],messages:[]}
             Rooms.push(newRoom)
             return newRoom;
         },
