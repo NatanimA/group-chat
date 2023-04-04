@@ -20,6 +20,10 @@
     "graphql": "^16.6.0",
     "graphql-subscriptions": "^2.0.0",
     "graphql-ws": "^5.12.0",
+    "pg": "^8.10.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.30.0",
+    "sequelize-cli": "^6.6.0",
     "uuidv4": "^6.2.13",
     "ws": "^8.13.0"
   },
