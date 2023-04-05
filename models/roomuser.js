@@ -10,12 +10,36 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      RoomUser.belongsTo(models.User,{
+        foreignKey:'userId'
+      })
+
+      RoomUser.belongsTo(models.Room,{
+        foreignKey:'roomId'
+      })
     }
   }
   RoomUser.init({
-    userId: DataTypes.STRING,
-    roomId: DataTypes.STRING
+   userId: {
+        type: DataTypes.UUID,
+        references:{
+          model:{
+            tableName:'Users'
+          },
+          key: 'id'
+        },
+        allowNull:false
+      },
+      roomId:{
+        type: DataTypes.UUID,
+        references:{
+          model:{
+            tableName: 'Rooms'
+          },
+          key: 'id'
+        },
+        allowNull:false
+      },
   }, {
     sequelize,
     modelName: 'RoomUser',
