@@ -1,5 +1,10 @@
 import { uuid } from 'uuidv4';
 import { PubSub, withFilter } from 'graphql-subscriptions';
+const  {addUser}= require('./user/add-user')
+const { addRoom } = require('./room/add-room')
+const { getRooms} = require('./room/get-rooms')
+const { getRoom } = require('./room/get-room')
+const { getMessages} = require('./message/get-messages')
 import { subscribe } from 'graphql';
 
 const Rooms = []
@@ -11,16 +16,9 @@ const pubSub = new PubSub();
 
 const resolvers = {
     Query: {
-        getRooms: () => {
-            return Rooms
-        },
-        getRoom: (parent,arg) => {
-            const {id} = arg
-            return Rooms.filter(room => room.id === id)
-        },
-        messages: (parent,arg) => {
-            return Messages
-        }
+        getRooms,
+        getRoom,
+        getMessages
     },
 
     Subscription: {
@@ -39,18 +37,8 @@ const resolvers = {
     },
 
     Mutation: {
-        addRoom: (parent,arg) => {
-            const {name} = arg
-            const newRoom = {id:uuid(),name,users:[],messages:[]}
-            Rooms.push(newRoom)
-            return newRoom;
-        },
-        addUser: (parent,arg) => {
-            const {name,email} = arg
-            const newUser = {id:uuid(),name,email}
-            Users.push(newUser)
-            return newUser;
-        },
+        addRoom,
+        addUser,
         joinRoom: (parent,arg) => {
             const {userId,roomId} = arg
             const user = Users.find(user => user.id === userId)
@@ -70,7 +58,6 @@ const resolvers = {
             const newMessage = {id:uuid(),user,content,room:inRoom}
             Rooms.forEach( r => {
                 if(r.id === room){
-                    console.log("RRRRRRRRRRRR: ",r)
                     r.messages.push(newMessage)
                 }
             })
