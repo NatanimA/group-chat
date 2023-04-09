@@ -1,17 +1,20 @@
 import { uuid } from 'uuidv4';
-import { PubSub, withFilter } from 'graphql-subscriptions';
+import { PubSub} from 'graphql-subscriptions';
+const Rooms = require('../../models').Room
+const Users = require('../../models').User
 const  {addUser}= require('./user/add-user')
 const { addRoom } = require('./room/add-room')
 const { getRooms} = require('./room/get-rooms')
 const { getRoom } = require('./room/get-room')
 const { getMessages} = require('./message/get-messages')
-import { subscribe } from 'graphql';
+const { roomNotification } = require('./room/room-notification')
+const { messageNotification } = require('./message/message-notification')
 
-const Rooms = []
-const Users = []
-const Messages = []
+import { MESSAGE_NOTIFICATION,ROOM_NOTIFICATION } from '../../constants';
+
+
 const ROOM_NOTIFICATION = 'ROOM_NOTIFICATION'
-const MESSAGE_NOTIFICATION = 'MESSAGE_NOTIFICATION'
+
 const pubSub = new PubSub();
 
 const resolvers = {
@@ -22,18 +25,8 @@ const resolvers = {
     },
 
     Subscription: {
-        roomNotification:{
-            subscribe: withFilter(() => pubSub.asyncIterator([ROOM_NOTIFICATION]),(payload,variables) => {
-                return(payload.roomNotification.id === variables.roomId)
-            })
-        },
-        messageNotification:{
-            subscribe: withFilter(() => pubSub.asyncIterator([MESSAGE_NOTIFICATION]),(payload,variables) => {
-                console.log("Payload: ",payload)
-                console.log("variables: ",variables)
-                return(variables.room.includes(payload.messageNotification.room.id))
-            })
-        }
+        roomNotification,
+        messageNotification
     },
 
     Mutation: {
