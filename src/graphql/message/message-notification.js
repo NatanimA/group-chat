@@ -4,11 +4,11 @@ import { MESSAGE_NOTIFICATION } from "../../../constants"
 const pubSub = new PubSub()
 
 
-const messageNotification = {
+export const messageNotification = {
     subscribe: withFilter(() => pubSub.asyncIterator([MESSAGE_NOTIFICATION]),(payload,variables) => {
                 return(variables.room.includes(payload.messageNotification.room.id))
             })
 }
 
 
-module.exports = { messageNotification }
+
