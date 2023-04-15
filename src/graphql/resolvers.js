@@ -6,6 +6,7 @@ const { getMessages} = require('./message/get-messages')
 const { roomNotification } = require('./room/room-notification')
 import { joinRoom } from './room/join-room';
 import { messageNotification } from './message/message-notification'
+import { postMessages } from './message/post-meesage'
 
 
 const resolvers = {
@@ -24,7 +25,7 @@ const resolvers = {
         addRoom,
         addUser,
         joinRoom,
-        postMessage
+        postMessages
     }
 }
 
