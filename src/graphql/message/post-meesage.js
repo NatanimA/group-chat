@@ -4,7 +4,7 @@ import { MESSAGE_NOTIFICATION } from '../../../constants'
 
 const pubSub = new PubSub()
 
-const postMessage = async (parent,{user,content,room}) => {
+export const postMessages = async (parent,{user,content,room}) => {
     try{
         const newMessage = await Messages({content,userId:user,roomId:room})
         pubSub.publish(MESSAGE_NOTIFICATION,{messageNotification:newMessage})
@@ -13,3 +13,6 @@ const postMessage = async (parent,{user,content,room}) => {
         return error
     }
 }
+
+
+
