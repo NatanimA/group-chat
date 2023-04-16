@@ -1,7 +1,7 @@
 const Messages = require('../../../models').Message
 
-const getMessages = async () => {
+export const getMessages = async () => {
     return Messages.findAll()
 }
 
-module.exports = { getMessages }
+
