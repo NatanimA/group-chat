@@ -2,12 +2,12 @@ const Rooms = require('../../../models').Room
 const Users = require('../../../models').User
 const RoomUsers = require('../../../models').RoomUser
 import { PubSub} from "graphql-subscriptions"
-import { ROOM_NOTIFICATION } from "../../../constants"
+const { ROOM_NOTIFICATION } = require("../../../constants")
 
 const pubSub = new PubSub()
 
 
-const joinRoom = async(parent,arg) => {
+export const joinRoom = async(parent,arg) => {
     const {userId,roomId} = arg
     try {
         await RoomUsers.create({roomId,userId})
@@ -26,4 +26,4 @@ const joinRoom = async(parent,arg) => {
 }
 
 
-module.exports = { joinRoom }
+
