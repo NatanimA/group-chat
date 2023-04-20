@@ -1,4 +1,5 @@
-const Users = require("../../../models").User
+
+import { Users } from "../../../constants/index.js";
 
 
 export const addUser = async (parent,arg) => {
