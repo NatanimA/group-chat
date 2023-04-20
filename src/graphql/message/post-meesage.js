@@ -1,6 +1,6 @@
 const Messages = require('../../../models').Message
 import { PubSub } from 'graphql-subscriptions'
-const { MESSAGE_NOTIFICATION } = require('../../../constants')
+const { MESSAGE_NOTIFICATION } = require('../../../constants/index.js')
 
 const pubSub = new PubSub()
 
