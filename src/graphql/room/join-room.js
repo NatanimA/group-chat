@@ -2,7 +2,7 @@ const Rooms = require('../../../models').Room
 const Users = require('../../../models').User
 const RoomUsers = require('../../../models').RoomUser
 import { PubSub} from "graphql-subscriptions"
-const { ROOM_NOTIFICATION } = require("../../../constants")
+const { ROOM_NOTIFICATION } = require("../../../constants/index.js")
 
 const pubSub = new PubSub()
 
