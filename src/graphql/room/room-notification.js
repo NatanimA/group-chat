@@ -1,5 +1,5 @@
 import { PubSub,withFilter } from "graphql-subscriptions"
-const {ROOM_NOTIFICATION } = require("../../../constants")
+const {ROOM_NOTIFICATION } = require("../../../constants/index.js")
 
 const pubSub = new PubSub()
 
