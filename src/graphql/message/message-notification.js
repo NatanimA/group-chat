@@ -1,5 +1,5 @@
 import { PubSub,withFilter } from "graphql-subscriptions"
-const { MESSAGE_NOTIFICATION } = require("../../../constants")
+const { MESSAGE_NOTIFICATION } = require("../../../constants/index.js")
 
 const pubSub = new PubSub()
 
