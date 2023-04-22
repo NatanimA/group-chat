@@ -1,12 +1,12 @@
-import { addUser } from './user/add-user.js'
-import { getRoom } from './room/get-room.js'
-import { getRooms } from './room/get-rooms.js'
-import { addRoom } from './room/add-room.js'
-import { getMessages } from './message/get-messages.js'
-import { roomNotification } from './room/room-notification.js'
-import { joinRoom } from './room/join-room.js'
-import { messageNotification } from './message/message-notification.js'
-import { postMessages } from './message/post-meesage.js'
+const { addUser } = require('./user/add-user.js');
+const { getRoom } = require('./room/get-room.js');
+const { getRooms } = require('./room/get-rooms.js');
+const { addRoom } = require('./room/add-room.js');
+const { getMessages } = require('./message/get-messages.js');
+const { roomNotification } = require('./room/room-notification.js');
+const { joinRoom } = require('./room/join-room.js');
+const { messageNotification } = require('./message/message-notification.js');
+const { postMessages } = require('./message/post-meesage.js');
 
 
 const resolvers = {
@@ -29,4 +29,4 @@ const resolvers = {
     }
 }
 
-export default resolvers
+module.exports = resolvers
