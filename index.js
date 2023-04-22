@@ -1,17 +1,18 @@
-import http from 'http'
-import express from 'express'
-import { ApolloServer } from '@apollo/server'
-import { expressMiddleware } from '@apollo/server/express4'
-import { ApolloServerPluginDrainHttpServer} from '@apollo/server/plugin/drainHttpServer'
-import fs from 'fs'
-import { gql } from 'apollo-server'
-import resolvers  from './src/graphql/resolvers.js'
-import cors from 'cors'
-import dotenv from 'dotenv'
-import { makeExecutableSchema } from '@graphql-tools/schema'
-import {WebSocketServer} from 'ws'
-import { useServer } from 'graphql-ws/lib/use/ws'
-
+const http = require('http');
+const express = require('express');
+const { ApolloServer } = require('@apollo/server');
+const { expressMiddleware } = require('@apollo/server/express4');
+const { ApolloServerPluginDrainHttpServer } = require('@apollo/server/plugin/drainHttpServer');
+const fs = require('fs');
+const { gql } = require('apollo-server');
+const resolvers = require('./src/graphql/resolvers.js');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const { makeExecutableSchema } = require('@graphql-tools/schema');
+const { WebSocketServer } = require('ws');
+const { useServer } = require('graphql-ws/lib/use/ws');
+const db = require('./models/index.js');
+const {startStandaloneServer} =  require('@apollo/server/standalone');
 dotenv.config()
 
 const main = async () => {
@@ -45,16 +46,28 @@ const main = async () => {
         ]
     })
 
-    await apolloServer.start()
 
-    app.use('/graphql',
-    cors({origin:'*',credentials:false}),
-    express.json(),
-    expressMiddleware(apolloServer))
+    const { url } = await startStandaloneServer(apolloServer, {
+        listen: { port: 9000 },
+        context:({req}) => {
+            // Instantiate your models with the Sequelize instance
+            const {Message,Room,RoomUser,User} = db
+            const models = {
+                Message,
+                Room,
+                RoomUser,
+                User
+            };
 
-    httpServer.listen(process.env.PORT,() => {
-        console.log(`Server is running on http://localhost:${process.env.PORT}/graphql`)
-    })
+            // Return the context object with the user ID and models
+            return {
+            req,
+            models,
+            };
+        },
+    });
+
+    console.log(`🚀  Server ready at: ${url}`);
 }
 
 main().catch(err => {
