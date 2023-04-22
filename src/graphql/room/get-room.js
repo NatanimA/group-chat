@@ -1,12 +1,13 @@
-const Rooms = require('../../../models').Room
-
-export const getRoom = async (parent,arg) => {
+const getRoom = async (_,arg,{models}) => {
             const {id} = arg
-            return Rooms.findOne({
+            const {Room} = models
+            return await Room.findOne({
                 where:{
                     id
                 }
             })
         }
+
+module.exports = {getRoom}
 
 
