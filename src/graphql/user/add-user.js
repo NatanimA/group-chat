@@ -1,12 +1,9 @@
-
-import { Users } from "../../../constants/index.js";
-
-
-export const addUser = async (parent,arg) => {
+const addUser = async (_,arg,{models}) => {
             const {name,email} = arg
-            const newUser = await Users.create({name,email})
+            const {User} = models
+            const newUser = await User.create({name,email})
             return newUser;
         }
 
-
+module.exports ={addUser}
 
