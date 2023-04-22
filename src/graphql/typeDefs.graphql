@@ -25,7 +25,7 @@ type Room {
 type Query {
     getRooms:[Room!]!
     getRoom(id:String!): Room!
-    messages: [Message!]!
+    getMessages: [Message!]!
 }
 
 
@@ -33,7 +33,7 @@ type Mutation {
     addRoom(name:String!): Room!
     addUser(name:String!, email:String!): User!
     joinRoom(userId:String!,roomId:String!): Room!
-    postMessage(user:String!,content:String!,room: ID!): Message!
+    postMessages(user:String!,content:String!,room: ID!): Message!
 }
 
 type Subscription{
