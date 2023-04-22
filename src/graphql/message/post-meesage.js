@@ -1,18 +1,20 @@
-const Messages = require('../../../models').Message
-import { PubSub } from 'graphql-subscriptions'
-const { MESSAGE_NOTIFICATION } = require('../../../constants/index.js')
+const { PubSub } = require('graphql-subscriptions');
+const { MESSAGE_NOTIFICATION } = require('../../../constants/index.js');
 
 const pubSub = new PubSub()
 
-export const postMessages = async (parent,{user,content,room}) => {
+const postMessages = async (_,{user,content,room},{models}) => {
+    const {Message} = models
     try{
-        const newMessage = await Messages({content,userId:user,roomId:room})
+        const newMessage = await Message({content,userId:user,roomId:room})
         pubSub.publish(MESSAGE_NOTIFICATION,{messageNotification:newMessage})
         return newMessage;
     }catch(error){
         return error
     }
 }
+
+module.exports = {postMessages}
 
 
 
