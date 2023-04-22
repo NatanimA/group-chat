@@ -1,9 +1,10 @@
-const Rooms = require('../../../models').Room
-
-export const addRoom = async (parent,arg) => {
+const addRoom = async (_,arg,{models}) => {
             const {name} = arg
-            const newRoom = await Rooms.create({name})
+            const {Room} = models
+            const newRoom = await Room.create({name})
             return newRoom;
         }
+
+module.exports = {addRoom}
 
 
