@@ -12,41 +12,47 @@ class Message extends Model {
 static associate(models) {
 // define association here
 Message.belongsTo(models.User,{
-foreignKey:'userId',
-as:'user'
+  foreignKey:'userId'
 })
 
 Message.belongsTo(models.Room,{
-    foreignKey:'roomId'
+    foreignKey:'roomId',
+    as:"messages"
   })
 }
 
 }
 Message.init({
-userId: {
-type: DataTypes.UUID,
-references:{
-model:{
-tableName:'Users'
-},
-key: 'id'
-},
-allowNull:false
-},
-roomId:{
-type: DataTypes.UUID,
-references:{
-model:{
-tableName: 'Rooms'
-},
-key: 'id'
-},
-allowNull:false
-},
-content: DataTypes.STRING
-}, {
-sequelize,
-modelName: 'Message',
-});
+    id: {
+            allowNull: false,
+            primaryKey: true,
+            type: DataTypes.UUID,
+            defaultValue:DataTypes.UUIDV4
+          },
+    userId: {
+    type: DataTypes.UUID,
+    references:{
+      model:{
+        tableName:'Users'
+        },
+        key: 'id'
+      },
+    allowNull:false
+    },
+    roomId:{
+    type: DataTypes.UUID,
+    references:{
+      model:{
+        tableName: 'Rooms'
+      },
+      key: 'id'
+    },
+    allowNull:false
+    },
+    content: DataTypes.STRING
+    }, {
+    sequelize,
+    modelName: 'Message',
+    });
 return Message;
 };
