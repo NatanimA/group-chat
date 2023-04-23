@@ -10,17 +10,25 @@ class RoomUser extends Model {
 * The models/index file will call this method automatically.
 */
 static associate(models) {
-RoomUser.belongsTo(models.User,{
-foreignKey:'userId'
-})
+// RoomUser.belongsTo(models.User,{
+//   foreignKey:'userId',
+//   as:"users"
+// })
 
-RoomUser.belongsTo(models.Room,{
-    foreignKey:'roomId'
-  })
+// RoomUser.belongsTo(models.Room,{
+//     foreignKey:'roomId',
+//     as:"rooms"
+//   })
 }
 
 }
 RoomUser.init({
+id: {
+        allowNull: false,
+        primaryKey: true,
+        type: DataTypes.UUID,
+        defaultValue:DataTypes.UUIDV4
+      },
 userId: {
 type: DataTypes.UUID,
 references:{
