@@ -1,7 +1,22 @@
 const getRooms = async (_,arg,{models}) => {
-    console.log("models: ",models)
-    const {Room} = models
-    return await Room.findAll();
+    const {Room,Message,User} = models
+    const rooms = await Room.findAll(
+        {
+            raw:true,
+            include:[
+                {
+                    model:Message,
+                    as:"messages"
+                },
+                {
+                    model:User,
+                    as:"users"
+                }
+            ]
+        }
+        );
+    console.log("Rooms: ",rooms)
+
 }
 
 module.exports = {getRooms}
