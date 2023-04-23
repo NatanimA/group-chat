@@ -11,20 +11,27 @@ class Room extends Model {
 */
 static associate(models) {
 Room.hasMany(models.Message,{
-foreignKey:'roomId'
+  foreignKey:'roomId',
+  as:"messages"
 })
+
 
 Room.belongsToMany(models.User,{
     through:'RoomUsers',
-    foreignKey: 'roomId'
+    foreignKey: 'roomId',
+    as:"users"
   })
 }
 
 }
 Room.init({
-name: DataTypes.STRING,
-messages: DataTypes.STRING,
-users: DataTypes.STRING
+id: {
+        allowNull: false,
+        primaryKey: true,
+        type: DataTypes.UUID,
+        defaultValue:DataTypes.UUIDV4
+      },
+name: DataTypes.STRING
 }, {
 sequelize,
 modelName: 'Room',
