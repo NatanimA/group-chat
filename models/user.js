@@ -12,17 +12,25 @@ class User extends Model {
 static associate(models) {
 // define association here
 User.hasMany(models.Message,{
-foreignKey:'userId'
-},)
+  foreignKey:'userId',
+  as:"messages"
+})
 
 User.belongsToMany(models.Room,{
     through:'RoomUsers',
-    foreignKey:'userId'
+    foreignKey:'userId',
+    as:"users"
   })
 }
 
 }
 User.init({
+id: {
+        allowNull: false,
+        primaryKey: true,
+        type: DataTypes.UUID,
+        defaultValue:DataTypes.UUIDV4
+      },
 name: DataTypes.STRING,
 email: DataTypes.STRING,
 password: DataTypes.STRING
