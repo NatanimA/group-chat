@@ -17,9 +17,9 @@ User.hasMany(models.Message,{
 })
 
 User.belongsToMany(models.Room,{
-    through:'RoomUsers',
+    through:models.RoomUser,
     foreignKey:'userId',
-    as:"users"
+    as:"rooms"
   })
 }
 
