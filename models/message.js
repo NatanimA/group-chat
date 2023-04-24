@@ -16,8 +16,7 @@ Message.belongsTo(models.User,{
 })
 
 Message.belongsTo(models.Room,{
-    foreignKey:'roomId',
-    as:"messages"
+    foreignKey:'roomId'
   })
 }
 
