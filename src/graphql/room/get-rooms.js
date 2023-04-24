@@ -2,7 +2,6 @@ const getRooms = async (_,arg,{models}) => {
     const {Room,Message,User} = models
     const rooms = await Room.findAll(
         {
-            raw:true,
             include:[
                 {
                     model:Message,
@@ -16,6 +15,7 @@ const getRooms = async (_,arg,{models}) => {
         }
         );
     console.log("Rooms: ",rooms)
+    return rooms;
 
 }
 
