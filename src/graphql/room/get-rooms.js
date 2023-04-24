@@ -14,7 +14,6 @@ const getRooms = async (_,arg,{models}) => {
             ]
         }
         );
-    console.log("Rooms: ",rooms)
     return rooms;
 
 }
