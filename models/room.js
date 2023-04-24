@@ -10,6 +10,7 @@ class Room extends Model {
 * The models/index file will call this method automatically.
 */
 static associate(models) {
+
 Room.hasMany(models.Message,{
   foreignKey:'roomId',
   as:"messages"
@@ -17,7 +18,7 @@ Room.hasMany(models.Message,{
 
 
 Room.belongsToMany(models.User,{
-    through:'RoomUsers',
+    through: models.RoomUser,
     foreignKey: 'roomId',
     as:"users"
   })
