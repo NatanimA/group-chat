@@ -12,7 +12,7 @@ const { makeExecutableSchema } = require('@graphql-tools/schema');
 const { WebSocketServer } = require('ws');
 const { useServer } = require('graphql-ws/lib/use/ws');
 const db = require('./models/index.js');
-const {startStandaloneServer} =  require('@apollo/server/standalone');
+const bodyParser = require("body-parser")
 dotenv.config()
 
 const main = async () => {
@@ -43,13 +43,13 @@ const main = async () => {
                     }
                 }
             }
-        ]
+        ],
+
     })
 
-
-    const { url } = await startStandaloneServer(apolloServer, {
-        listen: { port: 9000 },
-        context:({req}) => {
+    await apolloServer.start();
+    app.use('/graphql', cors(), bodyParser.json(), expressMiddleware(apolloServer,{
+        context: ({req}) => {
             // Instantiate your models with the Sequelize instance
             const {Message,Room,RoomUser,User} = db
             const models = {
@@ -65,9 +65,13 @@ const main = async () => {
             models,
             };
         },
-    });
+    }));
 
-    console.log(`🚀  Server ready at: ${url}`);
+    const PORT = process.env.PORT || 9000;
+    // Now that our HTTP server is fully set up, we can listen to it.
+    httpServer.listen(PORT, () => {
+    console.log(`Server is now running on http://localhost:${PORT}/graphql`);
+    });
 }
 
 main().catch(err => {
