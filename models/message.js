@@ -12,11 +12,13 @@ class Message extends Model {
 static associate(models) {
 // define association here
 Message.belongsTo(models.User,{
-  foreignKey:'userId'
+  foreignKey:'userId',
+  as:"user"
 })
 
 Message.belongsTo(models.Room,{
-    foreignKey:'roomId'
+    foreignKey:'roomId',
+    as: "room"
   })
 }
 
