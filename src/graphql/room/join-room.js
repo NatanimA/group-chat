@@ -10,7 +10,6 @@ const joinRoom = async(_,arg,{models}) => {
     try {
         await RoomUser.create({roomId,userId})
         const room = await Room.findOne({
-        raw:true,
         where:{
             id:roomId
         },
