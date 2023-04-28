@@ -5,7 +5,8 @@ const pubSub = new PubSub()
 
 
 const roomNotification = {
-    subscribe: withFilter(() => pubSub.asyncIterator([ROOM_NOTIFICATION]),(payload,variables) => {
+    subscribe: withFilter(() => pubSub.asyncIterator(ROOM_NOTIFICATION),(payload,variables) => {
+                console.log("Payload: ",payload)
                 return(payload.roomNotification.id === variables.roomId)
             })
 }
