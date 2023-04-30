@@ -4,6 +4,8 @@ import { GET_MESSAGES } from './queries'
 import { Container, Row,Col, FormInput,Button } from 'shards-react'
 import {MESSAGE_SUBSCRIPTION} from './queries'
 
+import "./Message.scss"
+
 const Messages = ({user}) => {
   const {data,subscribeToMore} = useQuery(GET_MESSAGES)
   const[messages,setMessages] = useState([])
@@ -27,7 +29,7 @@ const Messages = ({user}) => {
   console.log("MESSAGES: ", messages)
 
   return (
-    <div>
+    <div className="app__message__container">
         {messages && messages.length > 0 ? messages.map((message) => (
             <div key={message.id} style={{display:'flex',justifyContent: user === message?.user ? 'right' : 'left',width:'100%'}}>
                 {user !== message.user ?
@@ -58,7 +60,7 @@ const Messages = ({user}) => {
                 </div>
             </div>
         ))
-        : <span>No messages found</span>
+        : <span className="app__no_message">No messages found</span>
         }
     </div>
   )
