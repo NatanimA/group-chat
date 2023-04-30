@@ -1,7 +1,4 @@
-const { PubSub } = require('graphql-subscriptions');
-const { MESSAGE_NOTIFICATION } = require('../../../constants/index.js');
-
-const pubSub = new PubSub()
+const { MESSAGE_NOTIFICATION,pubSub } = require('../../../constants/index.js');
 
 const postMessages = async (_,{user,content,room},{models}) => {
     const {Message,User,Room} = models
