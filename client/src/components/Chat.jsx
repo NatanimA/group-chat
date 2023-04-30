@@ -6,6 +6,10 @@ import { POST_MESSAGES } from './queries';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
 import { createClient } from 'graphql-ws'
 import { getMainDefinition } from '@apollo/client/utilities';
+import SideBar from "./SideBar/SideBar"
+
+
+import "./Chat.scss"
 
 const wsLink = new GraphQLWsLink(createClient({
   url:'ws://localhost:9000/graphql'
@@ -48,9 +52,11 @@ const Chat = () => {
     })
   }
   return (
-    <Container>
+    <>
+      <SideBar />
+      <Container className="app__chat__container">
         <Messages user={state.user} />
-        <Row>
+        <Row className="app__chat__form_input">
           <Col xs={2} style={{padding:0}}>
               <FormInput
                 label="user"
@@ -78,6 +84,9 @@ const Chat = () => {
           </Col>
         </Row>
     </Container>
+
+    </>
+
   )
 }
 
