@@ -1,7 +1,6 @@
-const { PubSub, withFilter } = require('graphql-subscriptions');
-const { ROOM_NOTIFICATION } = require('../../../constants/index.js');
+const {withFilter } = require('graphql-subscriptions');
+const { ROOM_NOTIFICATION,pubSub } = require('../../../constants/index.js');
 
-const pubSub = new PubSub()
 
 
 const roomNotification = {
