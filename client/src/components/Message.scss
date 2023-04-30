@@ -1,0 +1,11 @@
+.app__message__container {
+    height: 100%;
+    margin: 2rem 0 0;
+    display: flex;
+    flex-direction:column;
+
+    span {
+        align-self:center;
+        margin: auto 0;
+    }
+}
