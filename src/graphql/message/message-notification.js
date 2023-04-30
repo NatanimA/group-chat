@@ -1,8 +1,5 @@
-const { PubSub, withFilter } = require('graphql-subscriptions');
-const { MESSAGE_NOTIFICATION } = require('../../../constants/index.js');
-
-const pubSub = new PubSub()
-
+const { withFilter } = require('graphql-subscriptions');
+const { MESSAGE_NOTIFICATION,pubSub } = require('../../../constants/index.js');
 
 const messageNotification = {
     subscribe: withFilter(() => pubSub.asyncIterator(MESSAGE_NOTIFICATION),(payload,variables) => {
