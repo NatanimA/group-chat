@@ -1,8 +1,4 @@
-const { PubSub } = require('graphql-subscriptions');
-const { ROOM_NOTIFICATION } = require('../../../constants/index.js');
-
-const pubSub = new PubSub()
-
+const { ROOM_NOTIFICATION,pubSub } = require('../../../constants/index.js');
 
 const joinRoom = async(_,arg,{models}) => {
     const {userId,roomId} = arg
@@ -24,6 +20,8 @@ const joinRoom = async(_,arg,{models}) => {
             }
         ]
          })
+
+
         pubSub.publish(ROOM_NOTIFICATION,{roomNotification:room})
         return room;
     }catch(error){
