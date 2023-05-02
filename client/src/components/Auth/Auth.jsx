@@ -4,7 +4,8 @@ import { FaGooglePlusG,FaLinkedinIn,FaFacebookF} from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 import Splash from '../Splash/Splash'
 import { validatePassword } from '../../constants/util-func'
-import './Auth.module.scss'
+import { GoogleLogin } from '@react-oauth/google';
+import './Auth.scss'
 
 
 
@@ -26,6 +27,12 @@ const Auth = () => {
   }, []);
 
 
+  const responseMessage = (response) => {
+        console.log(response);
+    };
+  const errorMessage = (error) => {
+      console.log(error);
+  };
 
   const handleRegisterInput = (e) => {
     setPasswordError('')
@@ -81,11 +88,12 @@ const Auth = () => {
     <>
         {loading ? (<Splash />) : (
             <>
-                <h2>Welcome to Nordstone UK</h2>
+                <h2>Welcome to Buna Time</h2>
                 <div className={slider ? "container" : "container right-panel-active"} id="container">
                     <div className="form-container sign-up-container">
                         <form onSubmit={handleUserRegistration}>
                             <h1>Create Account</h1>
+                            <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
                             <div className="social-container">
                                 <a>
                                     <FaFacebookF />
