@@ -10,7 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute"
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <GoogleOAuthProvider clientId="320120764050-l4lf7hpo8oeqvevk23iv0hiv3hsv440j.apps.googleusercontent.com">
+  <GoogleOAuthProvider clientId="816245556656-0im4cmjtje32l2mtdathau612mb8pftt.apps.googleusercontent.com">
       <React.StrictMode>
         <BrowserRouter>
           <Routes>
