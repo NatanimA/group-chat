@@ -1,15 +1,17 @@
 import React, { useState,useEffect } from 'react'
 import { FaGooglePlusG,FaLinkedinIn,FaFacebookF} from 'react-icons/fa'
+import axios from 'axios'
 
 import { useNavigate } from 'react-router-dom'
 import Splash from '../Splash/Splash'
 import { validatePassword } from '../../constants/util-func'
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin,useGoogleLogin,googleLogout } from '@react-oauth/google';
 import './Auth.scss'
 
 
 
 const Auth = () => {
+  const [user,setUser] = useState(null);
   const [slider,setSlider] = useState(true);
   const [userRegister,setUserRegister] = useState({email:'',password:''});
   const [userLogin,setUserLogin] = useState({email:'',password:''});
@@ -26,7 +28,30 @@ const Auth = () => {
       },4000)
   }, []);
 
+  useEffect(() => {
+    if (user) {
+                axios
+                    .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+                        headers: {
+                            Authorization: `Bearer ${user.access_token}`,
+                            Accept: 'application/json'
+                        }
+                    })
+                    .then((res) => {
+                        console.log("AX RES: ",res)
+                    })
+                    .catch((err) => console.log(err));
+            }
+  },[user])
 
+  const login = useGoogleLogin({
+    onSuccess:(response) => {
+        setUser(response)
+    },
+    onError: (error) => {
+        console.log("Error: ",error)
+    }
+  })
   const responseMessage = (response) => {
         console.log(response);
     };
@@ -93,12 +118,12 @@ const Auth = () => {
                     <div className="form-container sign-up-container">
                         <form onSubmit={handleUserRegistration}>
                             <h1>Create Account</h1>
-                            <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
                             <div className="social-container">
                                 <a>
                                     <FaFacebookF />
                                 </a>
-                                <a>
+
+                                <a onClick={() => login()}>
                                     <FaGooglePlusG />
                                 </a>
                                 <a>
